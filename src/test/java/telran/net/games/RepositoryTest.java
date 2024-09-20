@@ -22,6 +22,7 @@ public class RepositoryTest {
 	}
 	static long gameId;
 	static String gamerUsername = "gamer1";
+	
 	@Test
 	@Order(1)
 	void createGameTest() {
@@ -33,6 +34,7 @@ public class RepositoryTest {
 		
 		
 	}
+	
 	@Test
 	@Order(2)
 	void createGamerTest() {
@@ -41,6 +43,7 @@ public class RepositoryTest {
 		assertNotNull(gamer);
 		
 	}
+	
 	@Order(3)
 	@Test
 	void createGameGamerTest() {
@@ -49,6 +52,7 @@ public class RepositoryTest {
 		assertEquals(1, gamers.size());
 		assertEquals(gamerUsername, gamers.get(0));
 	}
+	
 	@Order(4)
 	@Test
 	void isGameStartedTest() {
@@ -57,6 +61,7 @@ public class RepositoryTest {
 		assertEquals(1, games.size());
 		assertEquals(1, games.get(0));
 	}
+	
 	@Order(5)
 	@Test
 	void setStartDateTest() {
