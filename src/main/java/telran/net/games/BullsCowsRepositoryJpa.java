@@ -7,7 +7,6 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 
 import jakarta.persistence.*;
 import jakarta.persistence.spi.*;
-
 import telran.net.games.exceptions.*;
 
 
@@ -127,10 +126,14 @@ public class BullsCowsRepositoryJpa implements BullsCowsRepository {
 	private GameGamer getGameGamer(long gameId, String username) {
 
 		TypedQuery<GameGamer> query;
+		try {
 			query = em.createQuery("select gg from GameGamer gg where gg.game.id = ?1 and gg.gamer.id = ?2",
 					GameGamer.class);
 			query.setParameter(1, gameId);
 			query.setParameter(2, username);
+		} catch (Exception e) {
+			throw new GameGamerNotFoundException(gameId, username);
+		}
 		return query.getSingleResult();
 	}
 
