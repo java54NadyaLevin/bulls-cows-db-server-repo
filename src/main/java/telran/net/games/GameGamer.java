@@ -17,9 +17,15 @@ public class GameGamer {
 	public long getId() {
 		return id;
 	}
+	
 	public boolean isWinner() {
 		return isWinner;
 	}
+	
+	public void setWinner(boolean isWinner) {
+		this.isWinner = isWinner;
+	}
+	
 	public Game getGame() {
 		return game;
 	}

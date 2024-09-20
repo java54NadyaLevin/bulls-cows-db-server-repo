@@ -53,6 +53,9 @@ public class RepositoryTest {
 	@Test
 	void isGameStartedTest() {
 		assertFalse(repository.isGameStarted(gameId));
+		List<Long> games = repository.getGameIdsNotStarted();
+		assertEquals(1, games.size());
+		assertEquals(1, games.get(0));
 	}
 	@Order(5)
 	@Test
@@ -71,29 +74,33 @@ public class RepositoryTest {
 		assertEquals(new MoveData("1243", 2, 2), moves.get(0));
 		assertEquals(new MoveData("1234", 4, 0), moves.get(1));
 	}
-//	@Order(7)
-//	@Test
-//	void isGameFinishedTest() {
-//		assertFalse(repository.isGameFinished(gameId));
-//	}
-//	@Order(8)
-//	@Test
-//	void setIsFinishedTest() {
-//		repository.setIsFinished(gameId);
-//		assertTrue(repository.isGameFinished(gameId));
-//	}
-//	@Order(9)
-//	@Test
-//	void isWinnerTest() {
-//		assertFalse(repository.isWinner(gameId, gamerUsername));
-//	}
-//	@Order(10)
-//	@Test
-//	void setWinnerTest() {
-//		repository.setWinner(gameId, gamerUsername);
-//		assertTrue(repository.isWinner(gameId, gamerUsername));
-//	}
-//	
+	
+	@Order(7)
+	@Test
+	void isGameFinishedTest() {
+		assertFalse(repository.isGameFinished(gameId));
+	}
+	
+	@Order(8)
+	@Test
+	void setIsFinishedTest() {
+		repository.setIsFinished(gameId);
+		assertTrue(repository.isGameFinished(gameId));
+	}
+	
+	@Order(9)
+	@Test
+	void isWinnerTest() {
+		assertFalse(repository.isWinner(gameId, gamerUsername));
+	}
+	
+	@Order(10)
+	@Test
+	void setWinnerTest() {
+		repository.setWinner(gameId, gamerUsername);
+		assertTrue(repository.isWinner(gameId, gamerUsername));
+	}
+	
 
 
 }

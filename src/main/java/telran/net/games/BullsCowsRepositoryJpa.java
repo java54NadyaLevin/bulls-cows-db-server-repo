@@ -78,25 +78,28 @@ public class BullsCowsRepositoryJpa implements BullsCowsRepository {
 		Game game = getGame(gameId);
 		game.setDate(dateTime);
 		transaction.commit();
-
 	}
 
 	@Override
 	public boolean isGameFinished(long id) {
-		// TODO Auto-generated method stub
-		return false;
+		Game game = getGame(id);
+		return game.isfinished();
 	}
 
 	@Override
 	public void setIsFinished(long gameId) {
-		// TODO Auto-generated method stub
-
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+		Game game = getGame(gameId);
+		game.setfinished(true);
+		transaction.commit();
 	}
 
 	@Override
 	public List<Long> getGameIdsNotStarted() {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Long> query = em.createQuery("select id from Game where dateTime is null",
+				Long.class);
+		return query.getResultList();
 	}
 
 	@Override
@@ -146,14 +149,16 @@ public class BullsCowsRepositoryJpa implements BullsCowsRepository {
 
 	@Override
 	public void setWinner(long gameId, String username) {
-		// TODO Auto-generated method stub
-
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+		GameGamer gameGamer = getGameGamer(gameId,username);
+		gameGamer.setWinner(true);
+		transaction.commit();
 	}
 
 	@Override
 	public boolean isWinner(long gameId, String username) {
-		// TODO Auto-generated method stub
-		return false;
+		GameGamer gameGamer = getGameGamer(gameId,username);
+		return gameGamer.isWinner();
 	}
-
 }
