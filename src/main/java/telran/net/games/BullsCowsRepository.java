@@ -19,5 +19,6 @@ public interface BullsCowsRepository {
 	List<MoveData> getAllGameGamerMoves(long gameId, String username);
 	void setWinner(long gameId, String username);
 	boolean isWinner(long gameId, String username);
+	void dropTables();
 	
 }

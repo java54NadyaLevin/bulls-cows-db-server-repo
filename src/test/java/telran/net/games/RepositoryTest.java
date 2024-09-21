@@ -20,6 +20,10 @@ public class RepositoryTest {
 	static long gameId;
 	static String gamerUsername = "gamer1";
 
+	void dropTables() {
+		repository.dropTables();
+	}
+	
 	@Test
 	@Order(1)
 	void createGameTest() {

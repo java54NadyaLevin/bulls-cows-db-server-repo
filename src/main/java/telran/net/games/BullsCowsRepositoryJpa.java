@@ -17,7 +17,18 @@ public class BullsCowsRepositoryJpa implements BullsCowsRepository {
 		em = emf.createEntityManager();
 
 	}
-
+	
+	@Override
+	public void dropTables() {
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+		em.createNativeQuery("drop table if exists Move").executeUpdate();
+		em.createNativeQuery("drop table if exists GameGamer").executeUpdate();
+		em.createNativeQuery("drop table if exists Game").executeUpdate();
+		em.createNativeQuery("drop table if exists Gamer").executeUpdate();
+		transaction.commit();
+	}
+	
 	@Override
 	public Game getGame(long id) {
 		Game game = em.find(Game.class, id);
@@ -157,4 +168,6 @@ public class BullsCowsRepositoryJpa implements BullsCowsRepository {
 		GameGamer gameGamer = getGameGamer(gameId, username);
 		return gameGamer.isWinner();
 	}
+
+	
 }
