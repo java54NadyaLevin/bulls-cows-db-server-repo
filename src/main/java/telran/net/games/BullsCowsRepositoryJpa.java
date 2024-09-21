@@ -9,10 +9,8 @@ import jakarta.persistence.*;
 import jakarta.persistence.spi.*;
 import telran.net.games.exceptions.*;
 
-
 public class BullsCowsRepositoryJpa implements BullsCowsRepository {
 	private EntityManager em;
-
 	public BullsCowsRepositoryJpa(PersistenceUnitInfo persistenceUnit, HashMap<String, Object> hibernateProperties) {
 		EntityManagerFactory emf = new HibernatePersistenceProvider()
 				.createContainerEntityManagerFactory(persistenceUnit, hibernateProperties);
@@ -95,8 +93,7 @@ public class BullsCowsRepositoryJpa implements BullsCowsRepository {
 
 	@Override
 	public List<Long> getGameIdsNotStarted() {
-		TypedQuery<Long> query = em.createQuery("select id from Game where dateTime is null",
-				Long.class);
+		TypedQuery<Long> query = em.createQuery("select id from Game where dateTime is null", Long.class);
 		return query.getResultList();
 	}
 
@@ -124,17 +121,18 @@ public class BullsCowsRepositoryJpa implements BullsCowsRepository {
 	}
 
 	private GameGamer getGameGamer(long gameId, String username) {
-
+		GameGamer gameGamer;
 		TypedQuery<GameGamer> query;
-		try {
 			query = em.createQuery("select gg from GameGamer gg where gg.game.id = ?1 and gg.gamer.id = ?2",
 					GameGamer.class);
 			query.setParameter(1, gameId);
 			query.setParameter(2, username);
+		try {
+		gameGamer = query.getSingleResult();
 		} catch (Exception e) {
 			throw new GameGamerNotFoundException(gameId, username);
 		}
-		return query.getSingleResult();
+		return gameGamer;
 	}
 
 	@Override
@@ -149,14 +147,14 @@ public class BullsCowsRepositoryJpa implements BullsCowsRepository {
 	public void setWinner(long gameId, String username) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		GameGamer gameGamer = getGameGamer(gameId,username);
+		GameGamer gameGamer = getGameGamer(gameId, username);
 		gameGamer.setWinner(true);
 		transaction.commit();
 	}
 
 	@Override
 	public boolean isWinner(long gameId, String username) {
-		GameGamer gameGamer = getGameGamer(gameId,username);
+		GameGamer gameGamer = getGameGamer(gameId, username);
 		return gameGamer.isWinner();
 	}
 }
